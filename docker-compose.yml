@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: postgres
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - PGDATA=/data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "9000:5432"
+    restart: unless-stopped
+    networks:
+      - article_web_service_network
+  write-service:
+    container_name: write-service
+    build:
+      args:
+        SERVICE_NAME: write-service
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - article_web_service_network
+    depends_on:
+      - postgres
+
+networks:
+  article_web_service_network:
+    name: article_web_service_network
+volumes:
+  postgres:

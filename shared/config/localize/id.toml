@@ -1,0 +1,13 @@
+[errors]
+  [errors.validation]
+    required = "{{.field}} wajib diisi"
+    oneof = "{{.field}} bukan value yang valid"
+    email = "{{.field}} bukan email yang valid"
+    base64 = "{{.field}} bukan base64 yang valid"
+  [errors.common]
+    internal_server_error = "Terjadi kesalahan, silakan coba lagi"
+    record_not_found = "{{.modelName}} tidak ditemukan"
+    unauthorized = "Anda tidak terautorisasi"
+    email_already_exists = "Email sudah digunakan"
+    forbidden_access = "Anda tidak memiliki akses untuk aksi ini"
+    session_expired = "Sesi anda telah expired"

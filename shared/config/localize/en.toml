@@ -1,0 +1,13 @@
+[errors]
+  [errors.validation]
+    required = "{{.field}} is required"
+    oneof = "{{.field}} is not valid value"
+    email = "{{.field}} not a valid email"
+    base64 = "{{.field}} not a valid base64"
+  [errors.common]
+    internal_server_error = "Something wrong, please try again"
+    record_not_found = "{{.modelName}} not found"
+    unauthorized = "You are unauthorized"
+    email_already_exists = "Email already exists"
+    forbidden_access = "You do not have access to this action"
+    session_expired = "Your session has expired"
