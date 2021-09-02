@@ -7,9 +7,12 @@ import (
 
 	connDsn "article-web-service/shared/database/postgres"
 	log "article-web-service/shared/log/app"
+
 	"github.com/BurntSushi/toml"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"github.com/olivere/elastic/v7"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/text/language"
@@ -97,4 +100,35 @@ func InitLocalizerI18n() *i18n.Bundle {
 	bundle.MustLoadMessageFile("shared/config/localize/id.toml")
 
 	return bundle
+}
+
+func InitRedis() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     fmt.Sprintf("%s:%d", viper.GetString("application.resources.redis.host"), viper.GetInt("application.resources.redis.port")),
+		Password: viper.GetString("application.resources.redis.password"),
+		DB:       viper.GetInt("application.resources.redis.db"),
+	})
+
+	if err := client.Ping(context.Background()).Err(); err != nil {
+		log.Panic(&logrus.Fields{"error": err.Error()}, "Error while init redis")
+	}
+
+	return client
+}
+
+func InitElasticsearch() *elastic.Client {
+	host := viper.GetString("application.resources.elasticsearch.host")
+	port := viper.GetInt("application.resources.elasticsearch.port")
+
+	client, err := elastic.NewClient(
+		elastic.SetURL(fmt.Sprintf("%s:%d", host, port)),
+		elastic.SetSniff(false),
+		elastic.SetHealthcheck(false),
+	)
+
+	if err != nil {
+		log.Panic(&logrus.Fields{"error": err.Error()}, "Error while init elasticsearch")
+	}
+
+	return client
 }

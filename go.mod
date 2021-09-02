@@ -7,7 +7,9 @@ require (
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-playground/validator/v10 v10.9.0
+	github.com/go-redis/redis/v8 v8.11.3 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.1.2
+	github.com/olivere/elastic/v7 v7.0.28 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.7.1
 	golang.org/x/text v0.3.6

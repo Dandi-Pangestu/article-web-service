@@ -13,3 +13,11 @@ application:
         username: postgres
         password: password
         options: sslmode=disable&TimeZone=UTC
+    redis:
+      host: redis
+      port: 6379
+      password: password
+      db: 0
+    elasticsearch:
+      host: http://elasticsearch
+      port: 9200

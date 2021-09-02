@@ -15,6 +15,29 @@ services:
     restart: unless-stopped
     networks:
       - article_web_service_network
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - redis:/data
+      - ./shared/redis/conf:/usr/local/etc/redis
+    ports:
+      - "9001:6379"
+    networks:
+      - article_web_service_network
+  elasticsearch:
+    container_name: elasticsearch
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.11.0"
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    networks:
+      - article_web_service_network
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9002:9200"
   write-service:
     container_name: write-service
     build:
@@ -28,9 +51,26 @@ services:
       - article_web_service_network
     depends_on:
       - postgres
+      - redis
+  article-created-subscriber:
+    container_name: article-created-subscriber
+    build:
+      args:
+        SERVICE_NAME: article-created-subscriber
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    networks:
+      - article_web_service_network
+    depends_on:
+      - redis
+      - elasticsearch
 
 networks:
   article_web_service_network:
     name: article_web_service_network
 volumes:
   postgres:
+  redis:
+  elasticsearch:

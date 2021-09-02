@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Article struct {
 	ID      int64 `gorm:"primaryKey"`
@@ -8,4 +12,10 @@ type Article struct {
 	Title   string
 	Body    string
 	Created time.Time
+}
+
+func (m *Article) BeforeCreate(tx *gorm.DB) error {
+	m.Created = time.Now()
+
+	return nil
 }

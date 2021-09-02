@@ -45,6 +45,7 @@ func main() {
 
 	bundle := config.InitLocalizerI18n()
 	db := config.InitPostgresDatabase(serviceName)
+	redisClient := config.InitRedis()
 
 	db.AutoMigrate(&models.Article{})
 
@@ -54,6 +55,7 @@ func main() {
 
 	appContext.R = r
 	appContext.DB = db
+	appContext.RedisClient = redisClient
 
 	router.Configure(&appContext)
 
