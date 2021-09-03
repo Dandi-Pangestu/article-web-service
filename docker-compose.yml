@@ -66,6 +66,19 @@ services:
     depends_on:
       - redis
       - elasticsearch
+  read-service:
+    container_name: read-service
+    build:
+      args:
+        SERVICE_NAME: read-service
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    networks:
+      - article_web_service_network
+    depends_on:
+      - elasticsearch
 
 networks:
   article_web_service_network:

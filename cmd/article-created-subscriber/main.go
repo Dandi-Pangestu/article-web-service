@@ -78,7 +78,8 @@ func main() {
 
 func indexToES(client *elastic.Client, article *models.Article) error {
 	data, _ := utils.Marshal(article)
-	_, err := client.Index().Index("articles").BodyJson(string(data)).Do(context.Background())
+	id := fmt.Sprintf("%d", article.ID)
+	_, err := client.Index().Index("articles").Id(id).BodyJson(string(data)).Do(context.Background())
 	if err != nil {
 		return err
 	}
