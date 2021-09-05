@@ -73,7 +73,7 @@ GET http://localhost:8082/v1/articles?author=&query=
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `author` | `string` | **Optional**. To search keyword in article title and body |
-| `query` | `string` | **Required**. Filter by author name |
+| `query` | `string` | **Optional**. Filter by author name |
 
 Example Request:
 
