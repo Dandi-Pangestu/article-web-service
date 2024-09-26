@@ -2,7 +2,7 @@
 
 ## Architecture
 
-![Diagram](QSCmBx.th.jpg)
+![Diagram](QSCmBx.jpg)
 
 ### Services
 
