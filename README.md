@@ -2,7 +2,7 @@
 
 ## Architecture
 
-[![QSCmBx.th.jpg](https://i.im.ge/2021/09/03/QSCmBx.th.jpg)](https://im.ge/i/QSCmBx)
+![Diagram](QSCmBx.th.jpg)
 
 ### Services
 
